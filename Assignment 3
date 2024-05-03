@@ -1,0 +1,147 @@
+from dataclasses import dataclass
+from typing import List
+
+@dataclass
+class Employee:
+    id: int
+    name: str
+    department: str
+    job_title: str
+    basic_salary: float
+    manager_id: int
+
+@dataclass
+class Guest:
+    id: int
+    name: str
+    department: str
+    job_title: str
+    basic_salary: float
+    manager_id: int
+
+@dataclass
+class Venue:
+    id: int
+    name: str
+    capacity: int
+
+@dataclass
+class Client:
+    id: int
+    name: str
+    email: str
+    phone: str
+
+@dataclass
+class Event:
+    id: int
+    type: str
+    theme: str
+    date: str
+    time: str
+    duration: str
+    venue: int
+    client: int
+    guests: List[Guest]
+    caterer: int
+    cleaning_company: int
+    decorations_company: int
+    entertainment_company: int
+    furniture_supply_company: int
+
+@dataclass
+class Invoice:
+    event: Event
+    total_cost: float
+
+@dataclass
+class CateringCompany:
+    pass
+
+@dataclass
+class CleaningCompany:
+    pass
+
+@dataclass
+class DecorationsCompany:
+    pass
+
+@dataclass
+class EntertainmentCompany:
+    pass
+
+@dataclass
+class FurnitureSupplyCompany:
+    pass
+
+def test_event():
+    # Create a new event
+    event = Event(
+        id=1,
+        type="Wedding",
+        theme="Classic",
+        date="2023-06-10",
+        time="12:00 PM",
+        duration="5 hours",
+        venue=1,
+        client=1,
+        guests=[
+            Guest(
+                id=1,
+                name="Jane Doe",
+                department="Marketing",
+                job_title="Marketer",
+                basic_salary=50000.00,
+                manager_id=2
+            ),
+            Guest(
+                id=2,
+                name="John Smith",
+                department="Sales",
+                job_title="Salesperson",
+                basic_salary=60000.00,
+                manager_id=3
+            )
+        ],
+        caterer=1,
+        cleaning_company=2,
+        decorations_company=3,
+        entertainment_company=4,
+        furniture_supply_company=5
+    )
+
+    # Test event attributes
+    assert event.id == 1
+    assert event.type == "Wedding"
+    assert event.theme == "Classic"
+    assert event.date == "2023-06-10"
+    assert event.time == "12:00 PM"
+    assert event.duration == "5 hours"
+    assert event.venue == 1
+    assert event.client == 1
+    assert len(event.guests) == 2
+    assert event.guests[0].id == 1
+    assert event.guests[0].name == "Jane Doe"
+    assert event.guests[0].department == "Marketing"
+    assert event.guests[0].job_title == "Marketer"
+    assert event.guests[0].basic_salary == 50000.00
+    assert event.guests[0].manager_id == 2
+    assert event.guests[1].id == 2
+    assert event.guests[1].name == "John Smith"
+    assert event.guests[1].department == "Sales"
+    assert event.guests[1].job_title == "Salesperson"
+    assert event.guests[1].basic_salary == 60000.00
+    assert event.guests[1].manager_id == 3
+    assert event.caterer == 1
+    assert event.cleaning_company== 2
+    assert event.decorations_company == 3
+    assert event.entertainment_company == 4
+    assert event.furniture_supply_company == 5
+
+    # Test creating an invoice for the event
+    invoice = Invoice(event=event, total_cost=10000.00)
+    assert invoice.event == event
+    assert invoice.total_cost == 10000.00
+
+if __name__ == "__main__":
+    test_event()
